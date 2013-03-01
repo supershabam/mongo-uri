@@ -1,0 +1,22 @@
+{
+  "name": "mongo-uri",
+  "version": "0.0.0",
+  "description": "I parse mongo URIs; especially the tricky ones with multiple hosts",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/supershabam/mongo-uri"
+  },
+  "keywords": [
+    "mongodb",
+    "uri",
+    "url"
+  ],
+  "author": "Ian Hansen",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "07d634af7ade5544fd28c98907cd1567b35a9b56"
+}
