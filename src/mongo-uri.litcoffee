@@ -31,7 +31,7 @@ This matches if the string starts with mongodb://
     RE_PULL_MONGODB_SCHEME = /^mongodb:\/\/(.*)$/i
 
 This will match if there is an auth portion to the string, and have username,
-password, and the rest of the uri as match results
+password, and the rest of the uri as match results.
 
     RE_PULL_MONGODB_AUTH = /^([^:\/\?,]+):([^@\/\?,]+)@(.*)$/
 
@@ -39,6 +39,12 @@ This will pull out everything before a / or ? character, which is the hostname
 portion.
 
     RE_PULL_HOSTNAME_PORTION = /^([^\/\?]+)(.*)$/
+
+This will test and see if there is a database (path) portion of the uri after
+pulling out the previous pieces. If it matches, match[1] will contain the database
+and match[2] will be the rest of the uri
+
+    RE_PULL_DATABASE = /^\/([^?]*)($|\?.*$)/
 
 MongoUri
 --------
@@ -80,6 +86,7 @@ to our resulting mongoUri object
       uri = exports._pullMongodbScheme(uri)
       [mongoUri.username, mongoUri.password, uri] = exports._pullAuth(uri)
       [mongoUri.hosts, mongoUri.ports, uri] = exports._pullHostnames(uri)
+      [mongoUri.database, uri] = exports._pullDatabase(uri)
 
 
 We made it without throwing an error! You truely deserve this
@@ -118,6 +125,7 @@ values
       return [username, password, uri]
 
 _pullHostnames
+--------------
 
 extracts all the hosts and their ports. Assumes that pullScheme and pullAuth has
 been executed
@@ -143,7 +151,18 @@ been executed
         ports.push port
       return [hosts, ports, uri]
 
+_pullDatabase
+-------------
 
+extracts the database from the uri, which is optional.
+
+    exports._pullDatabase = (uri)->
+      matches = uri.match RE_PULL_DATABASE
+      return [null, uri] if matches is null
+      database = matches[1]
+      uri = matches[2]
+      database = if database.length then database else null
+      return [database, uri]
 
 
 
