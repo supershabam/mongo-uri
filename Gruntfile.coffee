@@ -1,5 +1,6 @@
 module.exports = (grunt)->
   grunt.initConfig
+    clean: ["lib"]
     coffee:
       glob:
         expand: true
@@ -8,7 +9,9 @@ module.exports = (grunt)->
         dest: "lib"
         ext: ".js"
 
+  grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadTasks "tasks"
 
-  grunt.registerTask "test", ["coffee", "mochacli"]
+  grunt.registerTask "test", ["clean", "coffee", "mochacli"]
+  grunt.registerTask "publish", ["clean", "coffee", "npm-publish"]
