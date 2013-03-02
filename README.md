@@ -7,11 +7,12 @@ I parse mongo URIs; especially the tricky repl set ones.
 Dear NodeJS MongoDB Drivers
 ---------------------------
 
-I want to use the mongodb connection string... and not just the simple `mongodb://localhost`.
+I want to use the [mongodb connection string](http://docs.mongodb.org/manual/reference/connection-string/)...
+and I need more than just `mongodb://localhost`. As it turns out, as soon as you 
+start working with real web-scale badassrockstar deployments, you need to 
+connect to replication sets. 
 
-As it turns out, as soon as you start working with real... non-localhost/side-project
-deployments, you need to connect to replication sets. Luckily the defined connection
-string format accomodates such configurations!
+Luckily, the defined connection string format accomodates such configurations!
 
 Sadly, you do not understand these connection strings, or have unacceptable bugs with
 your parsing (e.g. uris are uri encoded).
@@ -70,7 +71,7 @@ Source
 Ok, so I made a Tweet (which is as good as a promise) that my next npm module would
 be in [literate coffeescript](http://ashkenas.com/literate-coffeescript/). So,
 I had fun documenting my code, but I *do not* want the .litcoffee to be transpiled
-upon `npm install` of everbody using this code.
+upon `npm install` for everbody using this code.
 
 GitHub should store the raw source (without the transpiled lib/*.js contents), but
 npm should store the ready-to-use no-transpiling-needed javascript!
