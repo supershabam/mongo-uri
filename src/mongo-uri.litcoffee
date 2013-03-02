@@ -20,6 +20,11 @@ know that mongo's default port is 27015 and to use that when the port is `null`.
 
 - - -
 
+Dependencies
+------------
+    querystring = require "querystring"
+
+
 Regular Expressions
 -------------------
 
@@ -45,6 +50,11 @@ pulling out the previous pieces. If it matches, match[1] will contain the databa
 and match[2] will be the rest of the uri
 
     RE_PULL_DATABASE = /^\/([^?]*)($|\?.*$)/
+
+This checks if there is a ? to signify a querystring and returns the proceeding
+key=value&key=value string that follows
+
+    RE_PULL_OPTIONS = /^\?(.*)$/
 
 MongoUri
 --------
@@ -87,6 +97,7 @@ to our resulting mongoUri object
       [mongoUri.username, mongoUri.password, uri] = exports._pullAuth(uri)
       [mongoUri.hosts, mongoUri.ports, uri] = exports._pullHostnames(uri)
       [mongoUri.database, uri] = exports._pullDatabase(uri)
+      [mongoUri.options] = exports._pullOptions(uri)
 
 
 We made it without throwing an error! You truely deserve this
@@ -164,6 +175,15 @@ extracts the database from the uri, which is optional.
       database = if database.length then database else null
       return [database, uri]
 
+_pullOptions
+------------
 
+Gets the querystring options. This is one place where we will delegate to other
+code: the querystring module.
 
+    exports._pullOptions = (uri)->
+      matches = uri.match RE_PULL_OPTIONS
+      return [Object.create(null)] if matches is null
+      options = querystring.parse(matches[1])
+      return [options]
 

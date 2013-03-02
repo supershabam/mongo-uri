@@ -55,3 +55,15 @@ describe "parse", ->
   it "should specify null when database is empty string", ->
     uri = MongoUri.parse "mongodb://host/?options"
     expect(uri.database).to.equal null
+
+  it "should parse querystring with no options", ->
+    uri = MongoUri.parse "mongodb://host/?"
+    expect(uri.options).to.eql {}
+
+  it "should parse querystring with single option", ->
+    uri = MongoUri.parse "mongodb://host/?w=1"
+    expect(uri.options).to.eql {w:"1"}
+
+  it "should parse querystring with multiple of the same value", ->
+    uri = MongoUri.parse "mongodb://host/?readPreferenceTags=dc:ny,rack:1&readPreferenceTags=dc:ny&readPreferenceTags="
+    expect(uri.options).to.eql {readPreferenceTags: ["dc:ny,rack:1", "dc:ny", ""]}
