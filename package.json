@@ -1,6 +1,6 @@
 {
   "name": "mongo-uri",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "I parse mongo URIs; especially the tricky ones with multiple hosts",
   "main": "lib/index.js",
   "scripts": {
