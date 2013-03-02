@@ -62,3 +62,26 @@ console.log(uri);
  * }
  */
 ```
+
+Source
+------
+
+Ok, so I made a Tweet (which is as good as a promise) that my next npm module would
+be in [literate coffeescript](http://ashkenas.com/literate-coffeescript/). So,
+I had fun documenting my code, but I *do not* want the .litcoffee to be transpiled
+upon `npm install` of everbody using this code.
+
+GitHub should store the raw source (without the transpiled lib/*.js contents), but
+npm should store the ready-to-use no-transpiling-needed javascript!
+
+So, I created a grunt task to do my publishing. Instead of using `npm publish`, I
+use `grunt publish` which cleans my directory, compiles my .litcoffee files, and
+then publishes.
+
+So, don't hate me for using .litcoffee. You're getting raw javascript goodness
+when you npm install me.
+
+License
+-------
+
+MIT

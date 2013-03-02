@@ -1,7 +1,7 @@
 {
   "name": "mongo-uri",
   "version": "0.1.0",
-  "description": "I parse mongo URIs; especially the tricky ones with multiple hosts",
+  "description": "I parse mongo URIs; especially the tricky repl set ones.",
   "main": "lib/index.js",
   "scripts": {
     "test": "grunt test"
