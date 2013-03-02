@@ -20,12 +20,11 @@
   "readmeFilename": "README.md",
   "gitHead": "07d634af7ade5544fd28c98907cd1567b35a9b56",
   "devDependencies": {
-    "grunt-mocha-cli": "~1.0.0",
-    "grunt": "~0.4.0",
-    "grunt-contrib-coffee": "~0.4.1",
-    "coffee-script": "~1.5.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-coffee": "~0.5.0",
     "chai": "~1.5.0",
+    "coffee-script": "~1.5.0",
     "mocha": "~1.8.1",
-    "grunt-contrib-clean": "~0.4.0"
+    "grunt": "~0.4.0"
   }
 }
