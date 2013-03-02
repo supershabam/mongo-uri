@@ -67,3 +67,76 @@ describe "parse", ->
   it "should parse querystring with multiple of the same value", ->
     uri = MongoUri.parse "mongodb://host/?readPreferenceTags=dc:ny,rack:1&readPreferenceTags=dc:ny&readPreferenceTags="
     expect(uri.options).to.eql {readPreferenceTags: ["dc:ny,rack:1", "dc:ny", ""]}
+
+  it "should set empty string if an option is specified without a value", ->
+    uri = MongoUri.parse "mongodb://host/?test"
+    expect(uri.options).to.eql {test: ""}
+
+  describe "mongodb examples", ->
+    it "should parse localhost", ->
+      uri = MongoUri.parse "mongodb://localhost"
+      expect(uri.username).to.equal null
+      expect(uri.password).to.equal null
+      expect(uri.hosts).to.eql ["localhost"]
+      expect(uri.ports).to.eql [null]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {}
+
+    it "should parse localhost with user and password", ->
+      uri = MongoUri.parse "mongodb://sysop:moon@localhost"
+      expect(uri.username).to.equal "sysop"
+      expect(uri.password).to.equal "moon"
+      expect(uri.hosts).to.eql ["localhost"]
+      expect(uri.ports).to.eql [null]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {}
+
+    it "should parse with database", ->
+      uri = MongoUri.parse "mongodb://sysop:moon@localhost/records"
+      expect(uri.username).to.equal "sysop"
+      expect(uri.password).to.equal "moon"
+      expect(uri.hosts).to.eql ["localhost"]
+      expect(uri.ports).to.eql [null]
+      expect(uri.database).to.eql "records"
+      expect(uri.options).to.eql {}
+
+    it "shouldn't parse a unix domain socket", ->
+      fn = ->
+        uri = MongoUri.parse "mongodb:///tmp/mongodb-27017.sock"
+      expect(fn).to.throw TypeError, /uri must specify hostname/
+
+    it "should parse a replica set with two members", ->
+      uri = MongoUri.parse "mongodb://db1.example.net,db2.example.com"
+      expect(uri.username).to.equal null
+      expect(uri.password).to.equal null
+      expect(uri.hosts).to.eql ["db1.example.net", "db2.example.com"]
+      expect(uri.ports).to.eql [null, null]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {}
+
+    it "should parse a replica set with three members and varous ports", ->
+      uri = MongoUri.parse "mongodb://localhost,localhost:27018,localhost:27019"
+      expect(uri.username).to.equal null
+      expect(uri.password).to.equal null
+      expect(uri.hosts).to.eql ["localhost", "localhost", "localhost"]
+      expect(uri.ports).to.eql [null, 27018, 27019]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {}
+
+    it "should parse a replica set with three members and distributes read preferences", ->
+      uri = MongoUri.parse "mongodb://example1.com,example2.com,example3.com/?readPreference=secondary"
+      expect(uri.username).to.equal null
+      expect(uri.password).to.equal null
+      expect(uri.hosts).to.eql ["example1.com", "example2.com", "example3.com"]
+      expect(uri.ports).to.eql [null, null, null]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {readPreference: "secondary"}
+
+    it "should parse a replica set with write concern specified", ->
+      uri = MongoUri.parse "mongodb://example1.com,example2.com,example3.com/?w=2&wtimeoutMS=2000"
+      expect(uri.username).to.equal null
+      expect(uri.password).to.equal null
+      expect(uri.hosts).to.eql ["example1.com", "example2.com", "example3.com"]
+      expect(uri.ports).to.eql [null, null, null]
+      expect(uri.database).to.eql null
+      expect(uri.options).to.eql {w: "2", wtimeoutMS: "2000"}

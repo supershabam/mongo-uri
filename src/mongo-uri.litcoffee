@@ -139,7 +139,10 @@ _pullHostnames
 --------------
 
 extracts all the hosts and their ports. Assumes that pullScheme and pullAuth has
-been executed
+been executed. 
+
+Though, drivers can technically connect over a unix socket, I find the use case 
+for this rare and stupid, so I am not going to handle it.
 
 *throws*
 * TypeError - if there is no hostname to be found
