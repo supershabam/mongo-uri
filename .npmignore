@@ -1,6 +1,5 @@
 node_modules
 lib-cov
-src
 .travis.yml
 .gitignore
 *.seed
