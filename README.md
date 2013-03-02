@@ -1,7 +1,8 @@
 mongo-uri
 =========
 
-I parse mongo URIs; especially the tricky repl set ones.
+I parse mongo URIs; especially the tricky repl set ones.  
+[![Build Status](https://travis-ci.org/supershabam/mongo-uri.png?branch=master)](https://travis-ci.org/supershabam/mongo-uri)
 
 Dear NodeJS MongoDB Drivers
 ---------------------------
