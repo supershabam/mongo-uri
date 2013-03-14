@@ -14,10 +14,10 @@ connect to replication sets.
 
 Luckily, the defined connection string format accomodates such configurations!
 
-Sadly, you do not understand these connection strings, or have unacceptable bugs with
-your parsing (e.g. uris are uri encoded).
+Sadly, node's drivers do not understand these connection strings, or have unacceptable bugs with
+parsing (e.g. uris should be uri encoded).
 
-So, I made a uri parser for you.
+So, I made a uri parser for you. I don't do anything else.
 
 Please find bugs in my code, and help me make it the best mongo connection string
 parser in history.
@@ -29,7 +29,7 @@ Heads up
 
 I refuse to make assumptions about defaults as part of the parser. So, if a port
 goes unspecified, I will say that the port is null (because it is), and it is
-your job to realize that the default port is 27015.
+your job to realize that the default port is 27017.
 
 Usage
 -----
@@ -69,16 +69,16 @@ Source
 ------
 
 Ok, so I made a Tweet (which is as good as a promise) that my next npm module would
-be in [literate coffeescript](http://ashkenas.com/literate-coffeescript/). So,
-I had fun documenting my code, but I *do not* want the .litcoffee to be transpiled
-upon `npm install` for everbody using this code.
+be in [literate coffeescript](http://ashkenas.com/literate-coffeescript/). 
 
-GitHub should store the raw source (without the transpiled lib/*.js contents), but
-npm should store the ready-to-use no-transpiling-needed javascript!
+It was a nice experiment. I wish GitHub would properly highlight the source. Literate
+CoffeeScript is a good choice for when the code is highly dependent on implementing a
+spec correctly, as the code references and displays the spec in-line and stays versioned
+along with the code.
 
-So, I created a grunt task to do my publishing. Instead of using `npm publish`, I
-use `grunt publish` which cleans my directory, compiles my .litcoffee files, and
-then publishes.
+I didn't want to make users of this module transpile .litcoffee files. So, I created a 
+grunt task to do my publishing that ensures I publish the resulting .js files to npm, and
+not the .litcoffee files.
 
 So, don't hate me for using .litcoffee. You're getting raw javascript goodness
 when you npm install me.
